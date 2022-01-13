@@ -1,13 +1,16 @@
 const canvas = document.getElementById("jsCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 600;
+canvas.height = 400;
+
+ctx.lineWidth = 2.5;
+ctx.strokeStyle = "palegreen";
 
 let paintingMode = false;
 
-function onMouseDown(event) {
+function startPainting() {
     paintingMode = true;
-}
-
-function onMouseUp(event) {
-    paintingMode = false;
 }
 
 function stopPainting() {
@@ -17,10 +20,16 @@ function stopPainting() {
 function onMouseMove(event) {
     const X = event.offsetX;
     const Y = event.offsetY;
-    console.log(X, Y);
+    if(!paintingMode) {
+        ctx.beginPath();
+        ctx.moveTo(X,Y);
+    } else {
+        ctx.lineTo(X,Y);
+        ctx.stroke();
+    }
 }
 
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mouseup", onMouseUp);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
 canvas.addEventListener("mousemove", onMouseMove);

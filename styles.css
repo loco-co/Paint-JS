@@ -18,22 +18,6 @@ body {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width:767px) {
-    .canvas {
-        width: 90%;
-        height: 500px;
-    }
-    .controls__colors .controls__color {
-        width: 30px;
-        height: 30px;
-        border-radius: 15px;
-        margin-left: 0px;
-    }
-    .controls {
-        margin-top: 40px;
-    }
-}
-
 .controls {
     margin-top: 80px;
     display: flex;
@@ -108,4 +92,23 @@ input[type=range]::-webkit-slider-thumb {
 
 input[type=range]:focus {
     outline: none;
+}
+
+@media (max-width:767px) {
+    body {
+        padding: 20px 0px;
+    }
+    .canvas {
+        width: 88%;
+        height: 450px;
+    }
+    .controls__colors .controls__color {
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+        margin: 1px;
+    }
+    .controls {
+        margin-top: 30px;
+    }
 }

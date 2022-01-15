@@ -4,6 +4,7 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const saveBtn = document.getElementById("jsSave");
+const clearAll = document.getElementById("jsClearAll");
 
 canvas.width = 600;
 canvas.height = 400;
@@ -77,6 +78,10 @@ function blockContextMenu(event) {
     event.preventDefault();
 }
 
+function handleClearAll() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
@@ -100,4 +105,8 @@ if(mode) {
 
 if(saveBtn) {
     saveBtn.addEventListener("click", handleClickSave);
+}
+
+if(clearAll) {
+    clearAll.addEventListener("click", handleClearAll);
 }

@@ -27,7 +27,7 @@ function stopPainting() {
     paintingMode = false;
 }
 
-function onMouseMove(event) {
+function handlePainting(event) {
     const X = event.offsetX;
     const Y = event.offsetY;
     if(!paintingMode) {
@@ -80,9 +80,13 @@ function blockContextMenu(event) {
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
-canvas.addEventListener("mousemove", onMouseMove);
+canvas.addEventListener("mousemove", handlePainting);
 canvas.addEventListener("click", handleClickCanvas);
 canvas.addEventListener("contextmenu", blockContextMenu);
+
+canvas.addEventListener("touchmove", handlePainting);
+canvas.addEventListener("touchend", stopPainting);
+canvas.addEventListener("touchstart", startPainting);
 
 Array.from(colors).forEach((color) => color.addEventListener("click", handleChangeColor));
 

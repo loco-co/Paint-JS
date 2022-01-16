@@ -8,6 +8,10 @@ const clearAll = document.getElementById("jsClearAll");
 
 canvas.width = 600;
 canvas.height = 400;
+if(window.screen.width < 768) {
+    canvas.width = (window.screen.width * 0.88);
+    canvas.height = 460;
+}
 
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -18,7 +22,7 @@ ctx.fillStyle = "#2c2c2c";
 let paintingMode = false;
 let fillingMode = false;
 
-function startPainting(event) {
+function startPainting() {
     if(fillingMode === false) {
         paintingMode = true;
         ctx.beginPath();
@@ -34,7 +38,7 @@ function startPaintingTouch(event) {
     }
 }
 
-function stopPainting(event) {
+function stopPainting() {
     ctx.closePath();
     paintingMode = false;
 }
@@ -75,12 +79,30 @@ function handleChangeColor(event) {
     ctx.fillStyle = color;
 }
 
+function handleChangeColorTouch(event) {
+    event.preventDefault();
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+}
+
 function handleChangeRange(event) {
     const value = event.target.value;
     ctx.lineWidth = value;
 }
 
 function handleModeClick() {
+    if(fillingMode === false) {
+        mode.innerText = "Paint";
+        fillingMode = true;
+    } else {
+        mode.innerText = "Fill";
+        fillingMode = false;
+    }
+}
+
+function handleModeClickTouch(event) {
+    event.preventDefault();
     if(fillingMode === false) {
         mode.innerText = "Paint";
         fillingMode = true;
@@ -97,6 +119,7 @@ function handleClickCanvas() {
 }
 
 function handleClickCanvasTouch(event) {
+    //모바일
     event.preventDefault();
     if(fillingMode) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -104,6 +127,14 @@ function handleClickCanvasTouch(event) {
 }
 
 function handleClickSave() {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL();
+    link.download = "picture🎨🖼";
+    link.click();
+}
+
+function handleClickSaveTouch(event) {
+    event.preventDefault();
     const link = document.createElement("a");
     link.href = canvas.toDataURL();
     link.download = "picture🎨🖼";
@@ -137,6 +168,7 @@ canvas.addEventListener("touchstart", handleClickCanvasTouch, false);
 
 
 Array.from(colors).forEach((color) => color.addEventListener("click", handleChangeColor));
+Array.from(colors).forEach((color) => color.addEventListener("touchstart", handleChangeColorTouch));
 
 if(range) {
     range.addEventListener("input", handleChangeRange);
@@ -144,10 +176,12 @@ if(range) {
 
 if(mode) {
     mode.addEventListener("click", handleModeClick);
+    mode.addEventListener("touchstart", handleModeClickTouch);
 }
 
 if(saveBtn) {
     saveBtn.addEventListener("click", handleClickSave);
+    saveBtn.addEventListener("touchstart", handleClickSaveTouch);
 }
 
 if(clearAll) {

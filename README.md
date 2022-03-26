@@ -1,2 +1,3 @@
 # Paint-JS
-Paint Board made with Vanilla JS
+### Paint Board in Vanilla JavaScript
+## [Try it now !](https://loco-co.github.io/Paint-JS/)
